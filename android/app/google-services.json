@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1020044641615",
+    "project_id": "payflow-asyncredux",
+    "storage_bucket": "payflow-asyncredux.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020044641615:android:f0a2277d13fdeecc40713a",
+        "android_client_info": {
+          "package_name": "dev.catalunha.payflow_asyncredux"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1020044641615-te4svq1mmlhf71jd17u00j6hj7grqb1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.catalunha.payflow_asyncredux",
+            "certificate_hash": "11afbf5fd2bc5bb5536a92d5110736240a8e07e1"
+          }
+        },
+        {
+          "client_id": "1020044641615-oi8usqivur8vkg11bldjsqv7mfolq2gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL3vCB7iGq238IQRHdGoNV2aAHEa1w670"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1020044641615-oi8usqivur8vkg11bldjsqv7mfolq2gq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
