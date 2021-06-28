@@ -2,16 +2,19 @@ import 'package:async_redux/async_redux.dart';
 
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/app_state.dart';
+import 'package:payflow_asyncredux/bill/bill_action.dart';
 import 'package:payflow_asyncredux/home/home_page.dart';
 import 'package:payflow_asyncredux/login/login_actions.dart';
 
-class HomeConnector extends StatelessWidget {
-  const HomeConnector({Key? key}) : super(key: key);
+class HomePageConnector extends StatelessWidget {
+  const HomePageConnector({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, HomeViewModel>(
       vm: () => HomeViewModelFactory(this),
+      // onInit: (store) => store.dispatch(GetCollectionBillAction()),
+      onInit: (store) => store.dispatch(StreamCollectionBillAction()),
       builder: (context, vm) => HomePage(
         signOut: vm.signOut,
         userPhotoUrl: vm.userPhotoUrl,
@@ -24,7 +27,7 @@ class HomeConnector extends StatelessWidget {
   }
 }
 
-class HomeViewModelFactory extends VmFactory<AppState, HomeConnector> {
+class HomeViewModelFactory extends VmFactory<AppState, HomePageConnector> {
   HomeViewModelFactory(widget) : super(widget);
   @override
   HomeViewModel fromStore() => HomeViewModel(

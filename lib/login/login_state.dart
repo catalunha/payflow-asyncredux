@@ -19,7 +19,7 @@ class LoginState {
         userFirebaseAuth: null,
         statusFirebaseAuth: StatusFirebaseAuth.unInitialized,
       );
-  LoginState copy({
+  LoginState copyWith({
     User? userFirebaseAuth,
     StatusFirebaseAuth? statusFirebaseAuth,
   }) =>

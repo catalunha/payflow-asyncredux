@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
-import 'package:payflow_asyncredux/user/userState.dart';
+import 'package:payflow_asyncredux/user/user_State.dart';
 import 'package:payflow_asyncredux/user/user_action.dart';
 
 class ChangeStatusFirebaseAuthLoginAction extends ReduxAction<AppState> {
@@ -12,8 +12,8 @@ class ChangeStatusFirebaseAuthLoginAction extends ReduxAction<AppState> {
   ChangeStatusFirebaseAuthLoginAction({required this.statusFirebaseAuth});
   @override
   AppState reduce() {
-    return state.copy(
-        loginState: state.loginState.copy(
+    return state.copyWith(
+        loginState: state.loginState.copyWith(
       statusFirebaseAuth: statusFirebaseAuth,
     ));
   }
@@ -25,8 +25,8 @@ class ChangeUserLoginAction extends ReduxAction<AppState> {
   ChangeUserLoginAction({required this.userFirebaseAuth});
   @override
   AppState reduce() {
-    return state.copy(
-        loginState: state.loginState.copy(
+    return state.copyWith(
+        loginState: state.loginState.copyWith(
       userFirebaseAuth: userFirebaseAuth,
     ));
   }
@@ -37,7 +37,7 @@ class CheckLoginAction extends ReduxAction<AppState> {
   Future<AppState?> reduce() async {
     dispatch(ChangeStatusFirebaseAuthLoginAction(
         statusFirebaseAuth: StatusFirebaseAuth.authenticating));
-    await Future.delayed(Duration(seconds: 5));
+    // await Future.delayed(Duration(seconds: 5));
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user == null) {
         print('---> User is currently signed out!');
@@ -48,7 +48,7 @@ class CheckLoginAction extends ReduxAction<AppState> {
         dispatch(ChangeUserLoginAction(userFirebaseAuth: user));
         dispatch(ChangeStatusFirebaseAuthLoginAction(
             statusFirebaseAuth: StatusFirebaseAuth.authenticated));
-        await Future.delayed(Duration(seconds: 5));
+        // await Future.delayed(Duration(seconds: 5));
 
         await dispatch(GetDocUserAsyncUserAction(uid: user.uid));
         print('---> SignInLoginAction: verificado se tem users correspondente');
@@ -84,7 +84,7 @@ class SignOutLoginAction extends ReduxAction<AppState> {
     print('---> SignOutLoginAction: googleLogout $done');
     dispatch(ChangeStatusFirebaseAuthLoginAction(
         statusFirebaseAuth: StatusFirebaseAuth.unAuthenticated));
-    return state.copy(
+    return state.copyWith(
       userState: UserState.initialState(),
     );
   }

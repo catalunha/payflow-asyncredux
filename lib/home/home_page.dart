@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:payflow_asyncredux/bill/bill_paid_page_connector.dart';
+import 'package:payflow_asyncredux/bill/bill_paid_page.dart';
+import 'package:payflow_asyncredux/bill/bill_to_pay_page_connector.dart';
 import 'package:payflow_asyncredux/theme/app_colors.dart';
 import 'package:payflow_asyncredux/theme/app_text_styles.dart';
 
@@ -23,12 +26,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      Container(
-        color: Colors.blue,
-      ),
-      Container(
-        color: Colors.green,
-      ),
+      BillToPayPageConnector(),
+      BillPaidPageConnector(),
     ];
     return Scaffold(
       appBar: PreferredSize(

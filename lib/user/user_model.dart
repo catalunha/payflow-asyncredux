@@ -1,23 +1,53 @@
+import 'dart:convert';
+
 import 'package:payflow_asyncredux/firestore/firestore_model.dart';
 
 class UserModel extends FirestoreModel {
   static final String collection = 'users';
   String? info;
+
   UserModel(
     String id, {
     this.info,
   }) : super(id);
 
+  UserModel copyWith({
+    String? info,
+  }) {
+    return UserModel(
+      this.id,
+      info: info ?? this.info,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'info': info,
+    };
+  }
+
+  factory UserModel.fromMap(String id, Map<String, dynamic> map) {
+    return UserModel(
+      id,
+      info: map['info'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String id, String source) =>
+      UserModel.fromMap(id, json.decode(source));
+
   @override
-  UserModel fromMap(Map<String, dynamic> map) {
-    if (map.containsKey('info')) info = map['info'];
-    return this;
+  String toString() => 'UserModel(info: $info)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is UserModel && other.info == info;
   }
 
   @override
-  Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (info != null) data['info'] = this.info;
-    return data;
-  }
+  int get hashCode => info.hashCode;
 }

@@ -20,7 +20,7 @@ class UserState {
         userCurrent: null,
         statusFirestoreUser: StatusFirestoreUser.unInitialized,
       );
-  UserState copy({
+  UserState copyWith({
     UserModel? userCurrent,
     StatusFirestoreUser? statusFirestoreUser,
   }) =>

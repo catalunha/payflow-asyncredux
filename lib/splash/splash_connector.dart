@@ -1,12 +1,12 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/app_state.dart';
-import 'package:payflow_asyncredux/home/home_connector.dart';
+import 'package:payflow_asyncredux/home/home_page_connector.dart';
 import 'package:payflow_asyncredux/login/login_actions.dart';
 import 'package:payflow_asyncredux/login/login_connector.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
 import 'package:payflow_asyncredux/splash/splash_page.dart';
-import 'package:payflow_asyncredux/user/userState.dart';
+import 'package:payflow_asyncredux/user/user_State.dart';
 
 class SplashConnector extends StatelessWidget {
   const SplashConnector({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class SplashConnector extends StatelessWidget {
           }
           if (vm.isAuthenticated && vm.isInFirestore) {
             print('--> vm.isAuthenticated && vm.isInFirestore : true');
-            return HomeConnector();
+            return HomePageConnector();
           }
           if (vm.isUnAuthenticated && !vm.isAuthenticating) {
             print(
@@ -65,7 +65,7 @@ class SplashViewModelFactory extends VmFactory<AppState, SplashConnector> {
       isOutFirestore: state.userState.statusFirestoreUser ==
           StatusFirestoreUser.outFirestore,
       startLogin: () async {
-        await Future.delayed(Duration(seconds: 5));
+        // await Future.delayed(Duration(seconds: 5));
         dispatch(CheckLoginAction());
       },
     );
