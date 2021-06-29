@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
+import 'package:payflow_asyncredux/bill/bill_pay_connector.dart';
 import 'package:payflow_asyncredux/theme/app_text_styles.dart';
 
 class BillTile extends StatelessWidget {
@@ -12,6 +13,15 @@ class BillTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () async {
+        await showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return BillPayConnector(
+                billModel: billModel,
+              );
+            });
+      },
       title: Text(
         '${billModel.name}',
         style: AppTextStyles.titleListTile,

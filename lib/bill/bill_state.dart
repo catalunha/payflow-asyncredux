@@ -2,12 +2,21 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
 
 class BillState {
   final BillModel? billCurrent;
   final List<BillModel>? billList;
   final List<BillModel>? billFiltered;
+  static List<BillModel> selectPaidBills(AppState state) =>
+      state.billState.billList!
+          .where((element) => element.paid == true)
+          .toList();
+  static List<BillModel> selectToPayBills(AppState state) =>
+      state.billState.billList!
+          .where((element) => element.paid == false)
+          .toList();
   static StreamSubscription<Object>? billStream;
   BillState({
     this.billCurrent,

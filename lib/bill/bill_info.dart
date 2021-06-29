@@ -22,21 +22,21 @@ class BoletoInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(AppImages.logomini),
-            SizedBox(width: 10),
+            SizedBox(width: 20),
             DividerVertical(
               height: 32,
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 20),
             Text.rich(TextSpan(
-              text: "Você tem ",
+              text: "Tenho ",
               style: AppTextStyles.captionBackground,
               children: [
                 TextSpan(
-                  text: "$quantity boletos\n",
+                  text: "$quantity boleto(s)\n",
                   style: AppTextStyles.captionBoldBackground,
                 ),
                 TextSpan(
-                  text: "cadastrados para pagar",
+                  text: "para pagar",
                   style: AppTextStyles.captionBackground,
                 ),
               ],

@@ -5,72 +5,6 @@ import 'package:payflow_asyncredux/bill/bill_model.dart';
 import 'package:payflow_asyncredux/theme/app_colors.dart';
 
 class BillToPayPage extends StatelessWidget {
-  // final List<BillModel> billModelList = [
-  //   BillModel(
-  //     '1',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '2',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '3',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '4',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '5',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '6',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '7',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  //   BillModel(
-  //     '8',
-  //     name: 'bbbb',
-  //     dueDate: '11/11/1111',
-  //     value: '11',
-  //     code: '123',
-  //     paid: false,
-  //   ),
-  // ];
   final List<BillModel> billModelList;
 
   BillToPayPage({Key? key, required this.billModelList}) : super(key: key);
@@ -94,10 +28,6 @@ class BillToPayPage extends StatelessWidget {
             )
           ],
         ),
-        // SizedBox(height: 10),
-        // Text('Meus boletos', style: AppTextStyles.titleBoldHeading),
-        // SizedBox(height: 10),
-        // Divider(color: AppColors.stroke),
         Expanded(child: BillList(billModelList: billModelList)),
       ],
     );

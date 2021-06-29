@@ -2,6 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
+import 'package:payflow_asyncredux/bill/bill_state.dart';
 import 'package:payflow_asyncredux/bill/bill_to_pay_page.dart';
 
 class BillToPayPageConnector extends StatelessWidget {
@@ -22,7 +23,7 @@ class BillToPayFactory extends VmFactory<AppState, BillToPayPageConnector> {
   BillToPayFactory(widget) : super(widget);
   @override
   BillToPayViewModel fromStore() => BillToPayViewModel(
-        billModelList: state.billState.billList!,
+        billModelList: BillState.selectToPayBills(state),
       );
 }
 

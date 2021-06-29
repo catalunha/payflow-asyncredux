@@ -30,9 +30,8 @@ class StreamCollectionBillAction extends ReduxAction<AppState> {
     print('--> StreamCollectionBillAction');
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     Query<Map<String, dynamic>> collRef;
-    collRef = firebaseFirestore
-        .collection(BillModel.collection)
-        .where('paid', isEqualTo: true);
+    collRef = firebaseFirestore.collection(BillModel.collection);
+    // .where('paid', isEqualTo: true);
 
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
@@ -53,6 +52,17 @@ class StreamCollectionBillAction extends ReduxAction<AppState> {
   }
 }
 
+class CancelStreamBillAction extends ReduxAction<AppState> {
+  CancelStreamBillAction();
+
+  @override
+  Future<AppState?> reduce() async {
+    print('--> CancelStreamBillAction ');
+    await BillState.billStream!.cancel();
+    return null;
+  }
+}
+
 class BillModelListBillAction extends ReduxAction<AppState> {
   final List<BillModel> billModelList;
 
@@ -68,13 +78,22 @@ class BillModelListBillAction extends ReduxAction<AppState> {
   }
 }
 
-class CancelStreamBillAction extends ReduxAction<AppState> {
-  CancelStreamBillAction();
+class UpdatePayBillAction extends ReduxAction<AppState> {
+  final String id;
+  final bool paid;
 
+  UpdatePayBillAction({
+    required this.id,
+    required this.paid,
+  });
   @override
   Future<AppState?> reduce() async {
-    print('--> CancelStreamBillAction ');
-    await BillState.billStream!.cancel();
+    print('--> ReadAllBillAction');
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var documentReference =
+        firebaseFirestore.collection(BillModel.collection).doc(id);
+    await documentReference.update({'paid': paid});
+
     return null;
   }
 }
