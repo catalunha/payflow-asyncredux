@@ -97,3 +97,22 @@ class UpdatePayBillAction extends ReduxAction<AppState> {
     return null;
   }
 }
+
+class AddPayBillAction extends ReduxAction<AppState> {
+  final BillModel billModel;
+
+  AddPayBillAction({
+    required this.billModel,
+  });
+  @override
+  Future<AppState?> reduce() async {
+    print('--> AddPayBillAction');
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var collectionReference =
+        firebaseFirestore.collection(BillModel.collection).doc();
+    BillModel billModelTemp = billModel.copyWith(paid: false);
+    await collectionReference.set(billModelTemp.toMap());
+
+    return null;
+  }
+}

@@ -8,7 +8,10 @@ import 'package:payflow_asyncredux/bill/bill_pay.dart';
 class BillPayConnector extends StatelessWidget {
   final BillModel billModel;
 
-  const BillPayConnector({Key? key, required this.billModel}) : super(key: key);
+  const BillPayConnector({
+    Key? key,
+    required this.billModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

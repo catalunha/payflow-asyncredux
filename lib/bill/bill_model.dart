@@ -5,19 +5,19 @@ import 'package:payflow_asyncredux/firestore/firestore_model.dart';
 class BillModel extends FirestoreModel {
   static late final String collection = 'bills';
 
-  final String name;
-  final String dueDate;
-  final String value;
-  final String code;
-  final bool paid;
+  final String? name;
+  final String? dueDate;
+  final String? value;
+  final String? code;
+  final bool? paid;
 
   BillModel(
     String id, {
-    required this.name,
-    required this.dueDate,
-    required this.value,
-    required this.code,
-    required this.paid,
+    this.name,
+    this.dueDate,
+    this.value,
+    this.code,
+    this.paid,
   }) : super(id);
 
   factory BillModel.fromMap(String id, Map<String, dynamic> map) {
