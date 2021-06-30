@@ -22,6 +22,7 @@ class HomePageConnector extends StatelessWidget {
         userDisplayName: vm.userDisplayName,
         // userEmail: vm.userEmail,
         // userUid: vm.userUid,
+        onBillSetCurrent: vm.onBillSetCurrent,
       ),
     );
   }
@@ -37,11 +38,17 @@ class HomeViewModelFactory extends VmFactory<AppState, HomePageConnector> {
         userDisplayName: state.loginState.userFirebaseAuth?.displayName ?? '',
         userEmail: state.loginState.userFirebaseAuth?.email ?? '',
         userUid: state.loginState.userFirebaseAuth?.uid ?? '',
+        onBillSetCurrent: (String id) async {
+          await dispatch(SetBillCurrentBillAction(id: id));
+          return true;
+        },
       );
 }
 
 class HomeViewModel extends Vm {
   final VoidCallback signOut;
+  final Function(String) onBillSetCurrent;
+
   final String userPhotoUrl;
   final String userPhoneNumber;
   final String userDisplayName;
@@ -55,6 +62,7 @@ class HomeViewModel extends Vm {
     required this.userDisplayName,
     required this.userEmail,
     required this.userUid,
+    required this.onBillSetCurrent,
   }) : super(equals: [
           userPhotoUrl,
           userPhoneNumber,

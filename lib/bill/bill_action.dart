@@ -78,6 +78,26 @@ class BillModelListBillAction extends ReduxAction<AppState> {
   }
 }
 
+class SetBillCurrentBillAction extends ReduxAction<AppState> {
+  final String id;
+
+  SetBillCurrentBillAction({required this.id});
+
+  @override
+  Future<AppState> reduce() async {
+    BillModel billModelSelected = BillModel('');
+    if (id.isNotEmpty) {
+      billModelSelected =
+          state.billState.billList!.firstWhere((element) => element.id == id);
+    }
+    return state.copyWith(
+      billState: state.billState.copyWith(
+        billCurrent: billModelSelected,
+      ),
+    );
+  }
+}
+
 class UpdatePayBillAction extends ReduxAction<AppState> {
   final String id;
   final bool paid;

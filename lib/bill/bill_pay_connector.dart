@@ -6,11 +6,11 @@ import 'package:payflow_asyncredux/bill/bill_model.dart';
 import 'package:payflow_asyncredux/bill/bill_pay.dart';
 
 class BillPayConnector extends StatelessWidget {
-  final BillModel billModel;
+  // final BillModel billModel;
 
   const BillPayConnector({
     Key? key,
-    required this.billModel,
+    // required this.billModel,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class BillPayConnector extends StatelessWidget {
     return StoreConnector<AppState, BillPayViewModel>(
       vm: () => BillPayFactory(this),
       builder: (context, vm) => BillPay(
-        billModel: billModel,
+        billModel: vm.billModel,
         onPay: vm.onPay,
       ),
     );
@@ -29,12 +29,15 @@ class BillPayFactory extends VmFactory<AppState, BillPayConnector> {
   BillPayFactory(widget) : super(widget);
   @override
   BillPayViewModel fromStore() => BillPayViewModel(
-      onPay: (String id, bool paid) =>
-          dispatch(UpdatePayBillAction(id: id, paid: paid)));
+        onPay: (String id, bool paid) =>
+            dispatch(UpdatePayBillAction(id: id, paid: paid)),
+        billModel: state.billState.billCurrent!,
+      );
 }
 
 class BillPayViewModel extends Vm {
+  final BillModel billModel;
   final Function(String, bool) onPay;
-
-  BillPayViewModel({required this.onPay}) : super(equals: []);
+  BillPayViewModel({required this.billModel, required this.onPay})
+      : super(equals: []);
 }

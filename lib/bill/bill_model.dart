@@ -65,7 +65,7 @@ class BillModel extends FirestoreModel {
 
   @override
   String toString() {
-    return 'BillModel(name: $name, dueDate: $dueDate, value: $value, code: $code, paid: $paid)';
+    return 'BillModel(name: $id,name: $name, dueDate: $dueDate, value: $value, code: $code, paid: $paid)';
   }
 
   @override

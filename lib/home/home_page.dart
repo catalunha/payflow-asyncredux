@@ -9,12 +9,14 @@ class HomePage extends StatefulWidget {
   final String userPhotoUrl;
   final String userDisplayName;
   final VoidCallback signOut;
+  final Function(String) onBillSetCurrent;
 
   const HomePage({
     Key? key,
     required this.userPhotoUrl,
     required this.userDisplayName,
     required this.signOut,
+    required this.onBillSetCurrent,
   }) : super(key: key);
 
   @override
@@ -86,7 +88,8 @@ class _HomePageState extends State<HomePage> {
                 )),
             GestureDetector(
               onTap: () async {
-                await Navigator.pushNamed(context, '/bill_create_text');
+                widget.onBillSetCurrent('');
+                Navigator.pushNamed(context, '/bill_create_text');
                 setState(() {});
               },
               child: Container(

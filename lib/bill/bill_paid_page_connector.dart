@@ -14,7 +14,7 @@ class BillPaidPageConnector extends StatelessWidget {
     return StoreConnector<AppState, BillPaidViewModel>(
       vm: () => BillPaidFactory(this),
       builder: (context, vm) => BillPaidPage(
-        onClick: vm.onClick,
+        onCancelStream: vm.onCancelStream,
         info: 'teste',
         billModelList: vm.billModelList,
       ),
@@ -26,18 +26,18 @@ class BillPaidFactory extends VmFactory<AppState, BillPaidPageConnector> {
   BillPaidFactory(widget) : super(widget);
   @override
   BillPaidViewModel fromStore() => BillPaidViewModel(
-        onClick: () => dispatch(CancelStreamBillAction()),
+        onCancelStream: () => dispatch(CancelStreamBillAction()),
         billModelList: BillState.selectPaidBills(state),
       );
 }
 
 class BillPaidViewModel extends Vm {
-  final VoidCallback onClick;
+  final VoidCallback onCancelStream;
   final List<BillModel> billModelList;
 
   BillPaidViewModel({
     required this.billModelList,
-    required this.onClick,
+    required this.onCancelStream,
   }) : super(equals: [
           billModelList,
         ]);

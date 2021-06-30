@@ -6,13 +6,13 @@ import 'package:payflow_asyncredux/theme/app_text_styles.dart';
 
 class BillPaidPage extends StatelessWidget {
   final String info;
-  final VoidCallback onClick;
+  final VoidCallback onCancelStream;
   final List<BillModel> billModelList;
 
   BillPaidPage({
     Key? key,
     required this.info,
-    required this.onClick,
+    required this.onCancelStream,
     required this.billModelList,
   }) : super(key: key);
 
@@ -23,6 +23,7 @@ class BillPaidPage extends StatelessWidget {
         SizedBox(height: 10),
         Text('Meus boletos pagos', style: AppTextStyles.titleBoldHeading),
         Divider(color: AppColors.stroke),
+        // IconButton(onPressed: onCancelStream, icon: Icon(Icons.cancel_schedule_send)),
         Expanded(child: BillList(billModelList: billModelList)),
       ],
     );

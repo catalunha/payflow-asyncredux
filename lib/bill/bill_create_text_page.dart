@@ -10,9 +10,13 @@ import 'package:payflow_asyncredux/widget/set_label_buttons.dart';
 class BillCreateTextPage extends StatefulWidget {
   final FormController formController;
   final Function(BillModel) onSave;
+  final BillModel billModel;
 
   const BillCreateTextPage(
-      {Key? key, required this.formController, required this.onSave})
+      {Key? key,
+      required this.formController,
+      required this.onSave,
+      required this.billModel})
       : super(key: key);
 
   @override
@@ -20,12 +24,19 @@ class BillCreateTextPage extends StatefulWidget {
 }
 
 class _BillCreateTextPageState extends State<BillCreateTextPage> {
-  final moneyMaskedTextController =
-      MoneyMaskedTextController(leftSymbol: 'R\$', decimalSeparator: ',');
-  final dueDatemaskedTextController = MaskedTextController(mask: '00/00/0000');
-  final barcodeInputTextController = TextEditingController();
+  late MoneyMaskedTextController moneyMaskedTextController;
+  late MaskedTextController dueDatemaskedTextController;
+  late TextEditingController barcodeInputTextController;
   @override
   void initState() {
+    moneyMaskedTextController = MoneyMaskedTextController(
+        initialValue: double.parse(widget.billModel.value ?? '0.0'),
+        leftSymbol: 'R\$',
+        decimalSeparator: ',');
+    dueDatemaskedTextController = MaskedTextController(
+        text: widget.billModel.dueDate, mask: '00/00/0000');
+    barcodeInputTextController =
+        TextEditingController(text: widget.billModel.code);
     super.initState();
   }
 
@@ -45,6 +56,7 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
             children: [
               InputText(
                 label: 'Nome do boleto',
+                initialValue: widget.billModel.name,
                 validator: widget.formController.validateName,
                 icon: Icons.description_outlined,
                 onChanged: (value) {
@@ -92,10 +104,10 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
           widget.formController.cadastrarBoleto();
           if (widget.formController.ifFormValid) {
             widget.onSave(widget.formController.billModel);
+            Navigator.pop(context);
           } else {
             print('Form Fields Invalidos');
           }
-          Navigator.pop(context);
         },
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
-import 'package:payflow_asyncredux/bill/bill_tile.dart';
+import 'package:payflow_asyncredux/bill/bill_tile_connector.dart';
 
 class BillList extends StatelessWidget {
   final List<BillModel> billModelList;
@@ -11,7 +11,8 @@ class BillList extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         // mainAxisSize: MainAxisSize.min,
-        children: billModelList.map((e) => BillTile(billModel: e)).toList(),
+        children:
+            billModelList.map((e) => BillTileConnector(billModel: e)).toList(),
       ),
     );
   }

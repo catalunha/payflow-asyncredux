@@ -15,6 +15,7 @@ class BillCreateTextPageConnector extends StatelessWidget {
       builder: (context, vm) => BillCreateTextPage(
         formController: vm.formController,
         onSave: vm.onSave,
+        billModel: vm.billModel,
       ),
     );
   }
@@ -25,26 +26,34 @@ class BillInsertTextFactory
   BillInsertTextFactory(widget) : super(widget);
   @override
   BillInsertTextViewModel fromStore() => BillInsertTextViewModel(
-      formController: FormController(),
-      onSave: (BillModel billModel) {
-        print('${billModel.toString()}');
-        dispatch(AddPayBillAction(billModel: billModel));
-      });
+        formController: FormController(billModel: state.billState.billCurrent!),
+        onSave: (BillModel billModel) {
+          print('${billModel.toString()}');
+          // dispatch(AddPayBillAction(billModel: billModel));
+        },
+        billModel: state.billState.billCurrent ?? BillModel(''),
+      );
 }
 
 class BillInsertTextViewModel extends Vm {
   final FormController formController;
   final Function(BillModel) onSave;
+  final BillModel billModel;
+
   BillInsertTextViewModel({
     required this.formController,
     required this.onSave,
-  }) : super(equals: [formController]);
+    required this.billModel,
+  }) : super(equals: [formController, billModel]);
 }
 
 class FormController {
+  // final String? billModelCurrent;
   final formKey = GlobalKey<FormState>();
   bool ifFormValid = false;
-  BillModel billModel = BillModel('');
+  BillModel billModel;
+
+  FormController({required this.billModel});
   String? validateName(String? value) =>
       value?.isEmpty ?? true ? "O nome não pode ser vazio" : null;
   String? validateVencimento(String? value) =>
