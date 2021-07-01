@@ -7,7 +7,7 @@ class BillModel extends FirestoreModel {
 
   final String? name;
   final String? dueDate;
-  final String? value;
+  final int? value;
   final String? code;
   final bool? paid;
   final bool? isActive;
@@ -26,7 +26,7 @@ class BillModel extends FirestoreModel {
   BillModel copyWith({
     String? name,
     String? dueDate,
-    String? value,
+    int? value,
     String? code,
     bool? paid,
     bool? isActive,

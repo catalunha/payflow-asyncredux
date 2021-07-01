@@ -47,7 +47,7 @@ class BillTile extends StatelessWidget {
           style: AppTextStyles.trailingRegular,
           children: [
             TextSpan(
-              text: "${billModel.value}",
+              text: "${(billModel.value! / 100).toStringAsFixed(2)}",
               style: AppTextStyles.trailingBold,
             ),
           ],

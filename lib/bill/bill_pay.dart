@@ -34,7 +34,7 @@ class BillPay extends StatelessWidget {
         ListTile(
           leading: Icon(FontAwesomeIcons.moneyBillAlt),
           // title: Text('Valor'),
-          title: Text(billModel.value!),
+          title: Text((billModel.value! / 100).toStringAsFixed(2)),
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.barcode),

@@ -30,8 +30,10 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
   @override
   void initState() {
     moneyMaskedTextController = MoneyMaskedTextController(
-        initialValue: double.parse(widget.billModel.value ?? '0.0'),
-        leftSymbol: 'R\$',
+        initialValue: widget.billModel.value == null
+            ? 0.0
+            : widget.billModel.value!.toDouble(),
+        // leftSymbol: 'R\$',
         decimalSeparator: ',');
     dueDatemaskedTextController = MaskedTextController(
         text: widget.billModel.dueDate, mask: '00/00/0000');
@@ -73,15 +75,15 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                 },
               ),
               InputText(
-                label: 'Valor',
+                label: 'Valor R\$',
                 controller: moneyMaskedTextController,
-                validator: (_) => widget.formController
-                    .validateValor(moneyMaskedTextController.numberValue),
+                validator: (_) => widget.formController.validateValor(int.parse(
+                    moneyMaskedTextController.text.replaceAll(',', ''))),
                 icon: FontAwesomeIcons.moneyBillAlt,
                 onChanged: (value) {
                   widget.formController.onChange(
-                      value: moneyMaskedTextController.numberValue
-                          .toStringAsFixed(2));
+                      value: int.parse(
+                          moneyMaskedTextController.text.replaceAll(',', '')));
                 },
               ),
               InputText(
