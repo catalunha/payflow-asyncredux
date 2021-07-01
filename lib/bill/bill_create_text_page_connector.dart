@@ -29,7 +29,23 @@ class BillInsertTextFactory
         formController: FormController(billModel: state.billState.billCurrent!),
         onSave: (BillModel billModel) {
           print('${billModel.toString()}');
+          print('${billModel.toMap()}');
+          print('${billModel.toData()}');
           // dispatch(AddPayBillAction(billModel: billModel));
+          if (billModel.id.isNotEmpty) {
+            dispatch(
+              UpdateDocBillAction(
+                id: billModel.id,
+                billModel: billModel,
+              ),
+            );
+          } else {
+            dispatch(
+              CreateDocBillAction(
+                billModel: billModel.copyWith(paid: false),
+              ),
+            );
+          }
         },
         billModel: state.billState.billCurrent ?? BillModel(''),
       );
@@ -69,8 +85,6 @@ class FormController {
     String? value,
     String? code,
   }) {
-    print(name);
-    print(dueDate);
     billModel = billModel.copyWith(
         name: name, dueDate: dueDate, value: value, code: code);
     print(billModel);

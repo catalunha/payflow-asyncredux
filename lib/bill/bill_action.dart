@@ -7,7 +7,7 @@ import 'package:payflow_asyncredux/bill/bill_model.dart';
 import 'package:payflow_asyncredux/bill/bill_state.dart';
 
 //CRUD
-class GetCollectionBillAction extends ReduxAction<AppState> {
+class ReadDocsBillAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     print('--> ReadAllBillAction');
@@ -19,12 +19,12 @@ class GetCollectionBillAction extends ReduxAction<AppState> {
             queryDocumentSnapshot.id, queryDocumentSnapshot.data()))
         .toList();
 
-    dispatch(BillModelListBillAction(billModelList: billModelList));
+    dispatch(SetBillListBillAction(billModelList: billModelList));
     return null;
   }
 }
 
-class StreamCollectionBillAction extends ReduxAction<AppState> {
+class StreamDocsBillAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     print('--> StreamCollectionBillAction');
@@ -42,18 +42,18 @@ class StreamCollectionBillAction extends ReduxAction<AppState> {
                 BillModel.fromMap(docSnapshot.id, docSnapshot.data()))
             .toList());
     streamList.listen((List<BillModel> billModelList) {
-      dispatch(BillModelListBillAction(billModelList: billModelList));
+      dispatch(SetBillListBillAction(billModelList: billModelList));
     });
     BillState.billStream = streamList.listen((List<BillModel> billModelList) {
-      dispatch(BillModelListBillAction(billModelList: billModelList));
+      dispatch(SetBillListBillAction(billModelList: billModelList));
     });
 
     return null;
   }
 }
 
-class CancelStreamBillAction extends ReduxAction<AppState> {
-  CancelStreamBillAction();
+class StreamCancelBillAction extends ReduxAction<AppState> {
+  StreamCancelBillAction();
 
   @override
   Future<AppState?> reduce() async {
@@ -63,10 +63,10 @@ class CancelStreamBillAction extends ReduxAction<AppState> {
   }
 }
 
-class BillModelListBillAction extends ReduxAction<AppState> {
+class SetBillListBillAction extends ReduxAction<AppState> {
   final List<BillModel> billModelList;
 
-  BillModelListBillAction({required this.billModelList});
+  SetBillListBillAction({required this.billModelList});
 
   @override
   Future<AppState> reduce() async {
@@ -98,30 +98,32 @@ class SetBillCurrentBillAction extends ReduxAction<AppState> {
   }
 }
 
-class UpdatePayBillAction extends ReduxAction<AppState> {
+class UpdateDocBillAction extends ReduxAction<AppState> {
   final String id;
-  final bool paid;
+  final BillModel billModel;
 
-  UpdatePayBillAction({
+  UpdateDocBillAction({
     required this.id,
-    required this.paid,
+    required this.billModel,
   });
   @override
   Future<AppState?> reduce() async {
-    print('--> ReadAllBillAction');
+    print('--> UpdateDocBillAction');
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var documentReference =
         firebaseFirestore.collection(BillModel.collection).doc(id);
-    await documentReference.update({'paid': paid});
+    print(billModel);
+    print(billModel.toData());
+    await documentReference.update(billModel.toData());
 
     return null;
   }
 }
 
-class AddPayBillAction extends ReduxAction<AppState> {
+class CreateDocBillAction extends ReduxAction<AppState> {
   final BillModel billModel;
 
-  AddPayBillAction({
+  CreateDocBillAction({
     required this.billModel,
   });
   @override

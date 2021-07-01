@@ -26,7 +26,7 @@ class BillPaidFactory extends VmFactory<AppState, BillPaidPageConnector> {
   BillPaidFactory(widget) : super(widget);
   @override
   BillPaidViewModel fromStore() => BillPaidViewModel(
-        onCancelStream: () => dispatch(CancelStreamBillAction()),
+        onCancelStream: () => dispatch(StreamCancelBillAction()),
         billModelList: BillState.selectPaidBills(state),
       );
 }

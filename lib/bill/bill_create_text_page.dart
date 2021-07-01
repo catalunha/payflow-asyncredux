@@ -79,8 +79,9 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                     .validateValor(moneyMaskedTextController.numberValue),
                 icon: FontAwesomeIcons.moneyBillAlt,
                 onChanged: (value) {
-                  widget.formController
-                      .onChange(value: moneyMaskedTextController.text);
+                  widget.formController.onChange(
+                      value: moneyMaskedTextController.numberValue
+                          .toStringAsFixed(2));
                 },
               ),
               InputText(

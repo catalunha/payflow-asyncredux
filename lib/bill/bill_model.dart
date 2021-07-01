@@ -10,29 +10,30 @@ class BillModel extends FirestoreModel {
   final String? value;
   final String? code;
   final bool? paid;
-
+  final bool? isActive;
+  final bool? isArchived;
   BillModel(
-    String id, {
+    id, {
     this.name,
     this.dueDate,
     this.value,
     this.code,
     this.paid,
+    this.isActive,
+    this.isArchived,
   }) : super(id);
 
-  factory BillModel.fromMap(String id, Map<String, dynamic> map) {
-    return BillModel(
-      id,
-      name: map['name'],
-      dueDate: map['dueDate'],
-      value: map['value'],
-      code: map['code'],
-      paid: map['paid'],
-    );
+  Map<String, dynamic> toData() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (name != null) data['name'] = this.name;
+    if (dueDate != null) data['dueDate'] = this.dueDate;
+    if (value != null) data['value'] = this.value;
+    if (code != null) data['code'] = this.code;
+    if (paid != null) data['paid'] = this.paid;
+    if (isActive != null) data['isActive'] = this.isActive;
+    if (isArchived != null) data['isArchived'] = this.isArchived;
+    return data;
   }
-
-  factory BillModel.fromJson(String id, String source) =>
-      BillModel.fromMap(id, json.decode(source));
 
   BillModel copyWith({
     String? name,
@@ -40,6 +41,8 @@ class BillModel extends FirestoreModel {
     String? value,
     String? code,
     bool? paid,
+    bool? isActive,
+    bool? isArchived,
   }) {
     return BillModel(
       this.id,
@@ -48,6 +51,8 @@ class BillModel extends FirestoreModel {
       value: value ?? this.value,
       code: code ?? this.code,
       paid: paid ?? this.paid,
+      isActive: isActive ?? this.isActive,
+      isArchived: isArchived ?? this.isArchived,
     );
   }
 
@@ -58,14 +63,32 @@ class BillModel extends FirestoreModel {
       'value': value,
       'code': code,
       'paid': paid,
+      'isActive': isActive,
+      'isArchived': isArchived,
     };
+  }
+
+  factory BillModel.fromMap(String id, Map<String, dynamic> map) {
+    return BillModel(
+      id,
+      name: map['name'],
+      dueDate: map['dueDate'],
+      value: map['value'],
+      code: map['code'],
+      paid: map['paid'],
+      isActive: map['isActive'],
+      isArchived: map['isArchived'],
+    );
   }
 
   String toJson() => json.encode(toMap());
 
+  factory BillModel.fromJson(String id, String source) =>
+      BillModel.fromMap(id, json.decode(source));
+
   @override
   String toString() {
-    return 'BillModel(name: $id,name: $name, dueDate: $dueDate, value: $value, code: $code, paid: $paid)';
+    return 'BillModel(name: $name, dueDate: $dueDate, value: $value, code: $code, paid: $paid, isActive: $isActive, isArchived: $isArchived)';
   }
 
   @override
@@ -77,7 +100,9 @@ class BillModel extends FirestoreModel {
         other.dueDate == dueDate &&
         other.value == value &&
         other.code == code &&
-        other.paid == paid;
+        other.paid == paid &&
+        other.isActive == isActive &&
+        other.isArchived == isArchived;
   }
 
   @override
@@ -86,6 +111,8 @@ class BillModel extends FirestoreModel {
         dueDate.hashCode ^
         value.hashCode ^
         code.hashCode ^
-        paid.hashCode;
+        paid.hashCode ^
+        isActive.hashCode ^
+        isArchived.hashCode;
   }
 }

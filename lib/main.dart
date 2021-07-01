@@ -8,7 +8,7 @@ import 'package:payflow_asyncredux/theme/app_colors.dart';
 late Store<AppState> store;
 final navigatorKey = GlobalKey<NavigatorState>();
 
-Future main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

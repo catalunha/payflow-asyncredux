@@ -52,7 +52,7 @@ class BillPay extends StatelessWidget {
               child: SimpleDialogOption(
                 child: Text('Sim'),
                 onPressed: () {
-                  onPay(billModel.id!, billModel.paid!);
+                  onPay(billModel.id, !billModel.paid!);
                   Navigator.pop(context, true);
                 },
               ),

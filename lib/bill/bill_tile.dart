@@ -18,7 +18,7 @@ class BillTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () async {
-        onBillSetCurrent(billModel.id!);
+        onBillSetCurrent(billModel.id);
         await showDialog<void>(
             context: context,
             builder: (BuildContext context) {
@@ -26,7 +26,7 @@ class BillTile extends StatelessWidget {
             });
       },
       onLongPress: () async {
-        onBillSetCurrent(billModel.id!);
+        onBillSetCurrent(billModel.id);
         await showDialog<void>(
             context: context,
             builder: (BuildContext context) {
