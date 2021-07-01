@@ -93,6 +93,21 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                   widget.formController.onChange(code: value);
                 },
               ),
+              widget.formController.billModel.id.isEmpty
+                  ? Container()
+                  : CheckboxListTile(
+                      title: Text('Arquivar este boleto ?'),
+                      value: widget.formController.billModel.isArchived,
+                      secondary: Icon(Icons.archive_outlined),
+                      activeColor: Colors.green,
+                      checkColor: Colors.black,
+                      // tristate: true,
+                      onChanged: (value) {
+                        setState(() {
+                          print(value);
+                          widget.formController.onChange(isArchived: value);
+                        });
+                      })
             ],
           ),
         ),

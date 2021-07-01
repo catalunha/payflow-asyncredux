@@ -84,10 +84,16 @@ class FormController {
     String? dueDate,
     String? value,
     String? code,
+    bool? isArchived,
   }) {
     billModel = billModel.copyWith(
-        name: name, dueDate: dueDate, value: value, code: code);
-    print(billModel);
+      name: name,
+      dueDate: dueDate,
+      value: value,
+      code: code,
+      isArchived: isArchived,
+    );
+    print('--> FormController.onChange(): $billModel');
   }
 
   void cadastrarBoleto() async {

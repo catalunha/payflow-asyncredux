@@ -19,21 +19,9 @@ class BillModel extends FirestoreModel {
     this.value,
     this.code,
     this.paid,
-    this.isActive,
-    this.isArchived,
+    this.isActive = true,
+    this.isArchived = false,
   }) : super(id);
-
-  Map<String, dynamic> toData() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    if (name != null) data['name'] = this.name;
-    if (dueDate != null) data['dueDate'] = this.dueDate;
-    if (value != null) data['value'] = this.value;
-    if (code != null) data['code'] = this.code;
-    if (paid != null) data['paid'] = this.paid;
-    if (isActive != null) data['isActive'] = this.isActive;
-    if (isArchived != null) data['isArchived'] = this.isArchived;
-    return data;
-  }
 
   BillModel copyWith({
     String? name,
@@ -56,6 +44,18 @@ class BillModel extends FirestoreModel {
     );
   }
 
+  Map<String, dynamic> toData() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (name != null) data['name'] = this.name;
+    if (dueDate != null) data['dueDate'] = this.dueDate;
+    if (value != null) data['value'] = this.value;
+    if (code != null) data['code'] = this.code;
+    if (paid != null) data['paid'] = this.paid;
+    if (isActive != null) data['isActive'] = this.isActive;
+    if (isArchived != null) data['isArchived'] = this.isArchived;
+    return data;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -76,8 +76,8 @@ class BillModel extends FirestoreModel {
       value: map['value'],
       code: map['code'],
       paid: map['paid'],
-      isActive: map['isActive'],
-      isArchived: map['isArchived'],
+      isActive: map['isActive'] ?? true,
+      isArchived: map['isArchived'] ?? false,
     );
   }
 
