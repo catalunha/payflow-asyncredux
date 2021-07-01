@@ -42,7 +42,7 @@ class BillInsertTextFactory
           } else {
             dispatch(
               CreateDocBillAction(
-                billModel: billModel.copyWith(paid: false),
+                billModel: billModel.copyWith(isPaid: false),
               ),
             );
           }
@@ -81,18 +81,19 @@ class FormController {
 
   void onChange({
     String? name,
-    String? dueDate,
+    DateTime? dueDate,
     int? value,
     String? code,
     bool? isArchived,
+    DateTime? payDate,
   }) {
     billModel = billModel.copyWith(
-      name: name,
-      dueDate: dueDate,
-      value: value,
-      code: code,
-      isArchived: isArchived,
-    );
+        name: name,
+        dueDate: dueDate,
+        value: value,
+        code: code,
+        isArchived: isArchived,
+        payDate: payDate);
     print('--> FormController.onChange(): $billModel');
   }
 

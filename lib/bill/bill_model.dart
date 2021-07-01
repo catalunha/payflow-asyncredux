@@ -6,29 +6,32 @@ class BillModel extends FirestoreModel {
   static late final String collection = 'bills';
 
   final String? name;
-  final String? dueDate;
+  final DateTime? dueDate;
+  final DateTime? payDate;
   final int? value;
   final String? code;
-  final bool? paid;
+  final bool? isPaid;
   final bool? isActive;
   final bool? isArchived;
   BillModel(
     id, {
     this.name,
     this.dueDate,
+    this.payDate,
     this.value,
     this.code,
-    this.paid,
+    this.isPaid,
     this.isActive = true,
     this.isArchived = false,
   }) : super(id);
 
   BillModel copyWith({
     String? name,
-    String? dueDate,
+    DateTime? dueDate,
+    DateTime? payDate,
     int? value,
     String? code,
-    bool? paid,
+    bool? isPaid,
     bool? isActive,
     bool? isArchived,
   }) {
@@ -36,9 +39,10 @@ class BillModel extends FirestoreModel {
       this.id,
       name: name ?? this.name,
       dueDate: dueDate ?? this.dueDate,
+      payDate: payDate ?? this.payDate,
       value: value ?? this.value,
       code: code ?? this.code,
-      paid: paid ?? this.paid,
+      isPaid: isPaid ?? this.isPaid,
       isActive: isActive ?? this.isActive,
       isArchived: isArchived ?? this.isArchived,
     );
@@ -48,9 +52,10 @@ class BillModel extends FirestoreModel {
     final Map<String, dynamic> data = Map<String, dynamic>();
     if (name != null) data['name'] = this.name;
     if (dueDate != null) data['dueDate'] = this.dueDate;
+    if (payDate != null) data['payDate'] = this.payDate;
     if (value != null) data['value'] = this.value;
     if (code != null) data['code'] = this.code;
-    if (paid != null) data['paid'] = this.paid;
+    if (isPaid != null) data['isPaid'] = this.isPaid;
     if (isActive != null) data['isActive'] = this.isActive;
     if (isArchived != null) data['isArchived'] = this.isArchived;
     return data;
@@ -60,22 +65,29 @@ class BillModel extends FirestoreModel {
     return {
       'name': name,
       'dueDate': dueDate,
+      'payDate': payDate,
       'value': value,
       'code': code,
-      'paid': paid,
+      'isPaid': isPaid,
       'isActive': isActive,
       'isArchived': isArchived,
     };
   }
 
   factory BillModel.fromMap(String id, Map<String, dynamic> map) {
+    print(
+        '${map['name']} dueDate.fromMi ${DateTime.fromMillisecondsSinceEpoch(map['dueDate'].millisecondsSinceEpoch)}');
+    print('${map['name']} dueDate.toDate() ${map['dueDate'].toDate()}');
     return BillModel(
       id,
       name: map['name'],
-      dueDate: map['dueDate'],
+      dueDate:
+          map['dueDate'] == null ? DateTime.now() : map['dueDate'].toDate(),
+      payDate:
+          map['payDate'] == null ? DateTime.now() : map['payDate'].toDate(),
       value: map['value'],
       code: map['code'],
-      paid: map['paid'],
+      isPaid: map['isPaid'],
       isActive: map['isActive'] ?? true,
       isArchived: map['isArchived'] ?? false,
     );
@@ -88,7 +100,7 @@ class BillModel extends FirestoreModel {
 
   @override
   String toString() {
-    return 'BillModel(name: $name, dueDate: $dueDate, value: $value, code: $code, paid: $paid, isActive: $isActive, isArchived: $isArchived)';
+    return 'BillModel(name: $name, dueDate: $dueDate, payDate: $payDate, value: $value, code: $code, isPaid: $isPaid, isActive: $isActive, isArchived: $isArchived)';
   }
 
   @override
@@ -98,9 +110,10 @@ class BillModel extends FirestoreModel {
     return other is BillModel &&
         other.name == name &&
         other.dueDate == dueDate &&
+        other.payDate == payDate &&
         other.value == value &&
         other.code == code &&
-        other.paid == paid &&
+        other.isPaid == isPaid &&
         other.isActive == isActive &&
         other.isArchived == isArchived;
   }
@@ -109,10 +122,25 @@ class BillModel extends FirestoreModel {
   int get hashCode {
     return name.hashCode ^
         dueDate.hashCode ^
+        payDate.hashCode ^
         value.hashCode ^
         code.hashCode ^
-        paid.hashCode ^
+        isPaid.hashCode ^
         isActive.hashCode ^
         isArchived.hashCode;
   }
+
+  // factory BillModel.fromMap(Map<String, dynamic> map) {
+  //   return BillModel(
+  //     map['name'],
+  //     map['dueDate'],
+  //     DateTime.fromMillisecondsSinceEpoch(map['payDate']),
+  //     map['value'],
+  //     map['code'],
+  //     map['isPaid'],
+  //     map['isActive'],
+  //     map['isArchived'],
+  //   );
+  // }
+
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
 import 'package:payflow_asyncredux/theme/app_colors.dart';
 
@@ -17,7 +18,7 @@ class BillPay extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Center(
-          child: billModel.paid!
+          child: billModel.isPaid!
               ? Text('Boleto não foi pago ? Estornar ?')
               : Text('Pagar este boleto ?')),
       children: [
@@ -29,7 +30,7 @@ class BillPay extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.date_range_outlined),
           // title: Text('Vencimento'),
-          title: Text(billModel.dueDate!),
+          title: Text(DateFormat('dd-MM-yyyy').format(billModel.dueDate!)),
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.moneyBillAlt),
@@ -52,7 +53,7 @@ class BillPay extends StatelessWidget {
               child: SimpleDialogOption(
                 child: Text('Sim'),
                 onPressed: () {
-                  onPay(billModel.id, !billModel.paid!);
+                  onPay(billModel.id, !billModel.isPaid!);
                   Navigator.pop(context, true);
                 },
               ),

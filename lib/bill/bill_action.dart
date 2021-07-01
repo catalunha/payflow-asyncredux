@@ -132,8 +132,8 @@ class CreateDocBillAction extends ReduxAction<AppState> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var collectionReference =
         firebaseFirestore.collection(BillModel.collection).doc();
-    BillModel billModelTemp = billModel.copyWith(paid: false);
-    await collectionReference.set(billModelTemp.toMap());
+    BillModel billModelTemp = billModel.copyWith(isPaid: false);
+    await collectionReference.set(billModelTemp.toData());
 
     return null;
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text2/flutter_masked_text2.dart';
+import 'package:intl/intl.dart';
 import 'package:payflow_asyncredux/bill/bill_create_text_page_connector.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
 import 'package:payflow_asyncredux/bill/bill_pay_connector.dart';
@@ -38,7 +40,9 @@ class BillTile extends StatelessWidget {
         style: AppTextStyles.titleListTile,
       ),
       subtitle: Text(
-        'Vence em ${billModel.dueDate}',
+        // 'Vence em ${billModel.dueDate}',
+        // 'Vence em ${billModel.payDate!}',
+        'Vence em ${DateFormat('dd-MM-yyyy').format(billModel.dueDate!)}',
         style: AppTextStyles.captionBody,
       ),
       trailing: Text.rich(
@@ -47,7 +51,8 @@ class BillTile extends StatelessWidget {
           style: AppTextStyles.trailingRegular,
           children: [
             TextSpan(
-              text: "${(billModel.value! / 100).toStringAsFixed(2)}",
+              text:
+                  '${MoneyMaskedTextController(initialValue: (billModel.value! / 100).toDouble(), decimalSeparator: ",").text}',
               style: AppTextStyles.trailingBold,
             ),
           ],

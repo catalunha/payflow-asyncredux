@@ -11,11 +11,11 @@ class BillState {
   final List<BillModel>? billFiltered;
   static List<BillModel> selectPaidBills(AppState state) =>
       state.billState.billList!
-          .where((element) => element.paid == true)
+          .where((element) => element.isPaid == true)
           .toList();
   static List<BillModel> selectToPayBills(AppState state) =>
       state.billState.billList!
-          .where((element) => element.paid == false)
+          .where((element) => element.isPaid == false)
           .toList();
   static StreamSubscription<Object>? billStream;
   BillState({

@@ -29,10 +29,10 @@ class BillPayFactory extends VmFactory<AppState, BillPayConnector> {
   BillPayFactory(widget) : super(widget);
   @override
   BillPayViewModel fromStore() => BillPayViewModel(
-        onPay: (String id, bool paid) => dispatch(
+        onPay: (String id, bool isPaid) => dispatch(
           UpdateDocBillAction(
             id: id,
-            billModel: BillModel('', paid: paid),
+            billModel: BillModel('', isPaid: isPaid),
           ),
         ),
         billModel: state.billState.billCurrent!,

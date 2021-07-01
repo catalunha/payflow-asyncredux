@@ -38,7 +38,8 @@ dependencies:
   google_fonts: ^2.1.0
   # outros packages
   flutter_masked_text2: ^0.9.1
-
+  intl: ^0.17.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

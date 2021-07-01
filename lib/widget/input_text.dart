@@ -25,6 +25,7 @@ class InputText extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16, bottom: 16),
       child: Column(
         children: [
+          Text(label),
           TextFormField(
             controller: controller,
             initialValue: initialValue,
