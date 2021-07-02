@@ -6,7 +6,7 @@ import 'package:payflow_asyncredux/login/login_action.dart';
 import 'package:payflow_asyncredux/login/login_connector.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
 import 'package:payflow_asyncredux/splash/splash_page.dart';
-import 'package:payflow_asyncredux/user/user_State.dart';
+import 'package:payflow_asyncredux/user/user_state.dart';
 
 class SplashConnector extends StatelessWidget {
   const SplashConnector({Key? key}) : super(key: key);

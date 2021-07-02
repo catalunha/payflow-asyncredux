@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
-import 'package:payflow_asyncredux/user/user_State.dart';
+import 'package:payflow_asyncredux/user/user_state.dart';
 import 'package:payflow_asyncredux/user/user_action.dart';
 
 class ChangeStatusFirebaseAuthLoginAction extends ReduxAction<AppState> {
@@ -81,13 +81,16 @@ class SignOutLoginAction extends ReduxAction<AppState> {
   Future<AppState> reduce() async {
     var google = GoogleSignInOrSignOut();
     var done = await google.googleLogout();
+    // dispatch(ChangeStatusFirebaseAuthLoginAction(
+    //     statusFirebaseAuth: StatusFirebaseAuth.unAuthenticated));
     print('---> SignOutLoginAction: googleLogout $done');
-    dispatch(ChangeStatusFirebaseAuthLoginAction(
-        statusFirebaseAuth: StatusFirebaseAuth.unAuthenticated));
     return state.copyWith(
       userState: UserState.initialState(),
     );
   }
+
+  void after() => dispatch(ChangeStatusFirebaseAuthLoginAction(
+      statusFirebaseAuth: StatusFirebaseAuth.unAuthenticated));
 }
 
 class GoogleSignInOrSignOut {
@@ -98,7 +101,7 @@ class GoogleSignInOrSignOut {
     try {
       print('--> GoogleSignInOrSignOut.googleLogin(): 1');
       final googleUser = await googleSignIn.signIn();
-      print('--> GoogleSignInOrSignOut.googleLogin(): 2');
+      print('--> GoogleSignInOrSignOut.googleLogin(): 2 $googleUser');
       if (googleUser == null) return false;
       _user = googleUser;
       print('--> GoogleSignInOrSignOut.googleLogin(): 3');

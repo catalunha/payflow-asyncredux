@@ -2,7 +2,8 @@ import 'package:async_redux/async_redux.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:payflow_asyncredux/app_state.dart';
-import 'package:payflow_asyncredux/user/user_State.dart';
+import 'package:payflow_asyncredux/login/login_action.dart';
+import 'package:payflow_asyncredux/user/user_state.dart';
 import 'package:payflow_asyncredux/user/user_model.dart';
 
 class ChangeStatusFirestoreUserUserAction extends ReduxAction<AppState> {
@@ -47,6 +48,7 @@ class GetDocUserAsyncUserAction extends ReduxAction<AppState> {
       );
     } else {
       print('--> GetDocUserAsyncUserAction: users NAO encontrado');
+      dispatch(SignOutLoginAction());
       return state.copyWith(
         userState: state.userState.copyWith(
           statusFirestoreUser: StatusFirestoreUser.outFirestore,

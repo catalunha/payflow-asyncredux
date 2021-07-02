@@ -3,7 +3,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:payflow_asyncredux/bill/bill_state.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
 import 'package:payflow_asyncredux/upload/upload_state.dart';
-import 'package:payflow_asyncredux/user/user_State.dart';
+import 'package:payflow_asyncredux/user/user_state.dart';
 
 class AppState {
   final Wait wait;
