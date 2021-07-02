@@ -18,24 +18,24 @@ class BillPay extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleDialog(
       title: Center(
-          child: billModel.isPaid!
+          child: billModel.isPaid
               ? Text('Boleto não foi pago ? Estornar ?')
               : Text('Pagar este boleto ?')),
       children: [
         ListTile(
           leading: Icon(Icons.description_outlined),
           // title: Text('Nome'),
-          title: Text(billModel.name!),
+          title: Text(billModel.name),
         ),
         ListTile(
           leading: Icon(Icons.date_range_outlined),
           // title: Text('Vencimento'),
-          title: Text(DateFormat('dd-MM-yyyy').format(billModel.dueDate!)),
+          title: Text(DateFormat('dd-MM-yyyy').format(billModel.dueDate)),
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.moneyBillAlt),
           // title: Text('Valor'),
-          title: Text((billModel.value! / 100).toStringAsFixed(2)),
+          title: Text((billModel.value / 100).toStringAsFixed(2)),
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.barcode),
@@ -53,7 +53,7 @@ class BillPay extends StatelessWidget {
               child: SimpleDialogOption(
                 child: Text('Sim'),
                 onPressed: () {
-                  onPay(billModel.id, !billModel.isPaid!);
+                  onPay(billModel.id, !billModel.isPaid);
                   Navigator.pop(context, true);
                 },
               ),

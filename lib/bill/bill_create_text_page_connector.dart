@@ -47,7 +47,8 @@ class BillInsertTextFactory
             );
           }
         },
-        billModel: state.billState.billCurrent ?? BillModel(''),
+        billModel: state.billState.billCurrent ??
+            BillModel('', name: '', value: 0, dueDate: DateTime.now()),
       );
 }
 
@@ -88,12 +89,12 @@ class FormController {
     DateTime? payDate,
   }) {
     billModel = billModel.copyWith(
-        name: name,
-        dueDate: dueDate,
-        value: value,
-        code: code,
-        isArchived: isArchived,
-        payDate: payDate);
+      name: name,
+      dueDate: dueDate,
+      value: value,
+      code: code,
+      isArchived: isArchived,
+    );
     print('--> FormController.onChange(): $billModel');
   }
 

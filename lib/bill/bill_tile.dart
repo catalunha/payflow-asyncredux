@@ -42,7 +42,7 @@ class BillTile extends StatelessWidget {
       subtitle: Text(
         // 'Vence em ${billModel.dueDate}',
         // 'Vence em ${billModel.payDate!}',
-        'Vence em ${DateFormat('dd-MM-yyyy').format(billModel.dueDate!)}',
+        'Vence em ${DateFormat('dd-MM-yyyy').format(billModel.dueDate)}',
         style: AppTextStyles.captionBody,
       ),
       trailing: Text.rich(
@@ -52,7 +52,7 @@ class BillTile extends StatelessWidget {
           children: [
             TextSpan(
               text:
-                  '${MoneyMaskedTextController(initialValue: (billModel.value! / 100).toDouble(), decimalSeparator: ",").text}',
+                  '${MoneyMaskedTextController(initialValue: (billModel.value / 100).toDouble(), decimalSeparator: ",").text}',
               style: AppTextStyles.trailingBold,
             ),
           ],

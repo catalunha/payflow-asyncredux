@@ -1,9 +1,14 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:payflow_asyncredux/bill/bill_create_text_page_connector.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
+import 'package:payflow_asyncredux/firestore/firebase_api.dart';
 import 'package:payflow_asyncredux/theme/app_colors.dart';
 import 'package:payflow_asyncredux/theme/app_text_styles.dart';
 import 'package:payflow_asyncredux/widget/divider_vertical.dart';
@@ -30,19 +35,16 @@ class BillCreateTextPage extends StatefulWidget {
 class _BillCreateTextPageState extends State<BillCreateTextPage> {
   late DateTime date;
   late TimeOfDay time;
+  File? file;
+  UploadTask? task;
+  String? urlDownload;
   late MoneyMaskedTextController moneyMaskedTextController;
   late MaskedTextController dueDatemaskedTextController;
   late TextEditingController barcodeInputTextController;
   @override
   void initState() {
-    date = widget.formController.billModel.payDate ?? DateTime.now();
-    time = widget.formController.billModel.payDate == null
-        ? TimeOfDay.now()
-        : TimeOfDay(hour: date.hour, minute: date.minute);
     moneyMaskedTextController = MoneyMaskedTextController(
-        initialValue: widget.billModel.value == null
-            ? 0.0
-            : (widget.billModel.value! / 100).toDouble(),
+        initialValue: (widget.billModel.value / 100).toDouble(),
         // leftSymbol: 'R\$',
         decimalSeparator: ',');
     // dueDatemaskedTextController = MaskedTextController(
@@ -64,6 +66,8 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
 
   @override
   Widget build(BuildContext context) {
+    final fileName =
+        file != null ? basename(file!.path) : 'Arquivo ainda não selectionado';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -86,7 +90,7 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                 },
               ),
               InputDate(
-                date: widget.formController.billModel.dueDate ?? DateTime.now(),
+                date: widget.formController.billModel.dueDate,
                 onSelectDate: (value) {
                   widget.formController.onChange(
                     dueDate: DateTime(
@@ -151,6 +155,19 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                           widget.formController.onChange(isArchived: value);
                         });
                       }),
+              ListTile(
+                leading: Icon(Icons.attach_file),
+                title: Text('Select file'),
+                subtitle: Text(fileName),
+                onTap: selectFile,
+              ),
+              ListTile(
+                leading: Icon(Icons.cloud_upload_outlined),
+                title: Text('Upload File'),
+                // subtitle: Text(urlDownload ?? ''),
+                onTap: uploadFile,
+              ),
+              task != null ? buildUploadStatus(task!) : Container(),
             ],
           ),
         ),
@@ -199,4 +216,48 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
     if (newTime == null) return;
     setState(() => time = newTime);
   }
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+    );
+    if (result == null) return;
+    final path = result.files.single.path!;
+    setState(() => file = File(path));
+  }
+
+  Future uploadFile() async {
+    if (file == null) return;
+    final fileName = basename(file!.path);
+    final destination = 'files/$fileName';
+    task = FirebaseApi.uploadFile(destination, file!);
+    setState(() {});
+    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    urlDownload = await snapshot.ref.getDownloadURL();
+    setState(() {});
+
+    print('Download-link:$urlDownload');
+  }
+
+  Widget buildUploadStatus(UploadTask uploadTask) =>
+      StreamBuilder<TaskSnapshot>(
+        stream: uploadTask.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final snap = snapshot.data!;
+            final progress = (snap.bytesTransferred / snap.totalBytes);
+            final percentage = (progress * 100).toStringAsFixed(2);
+            return Text(
+              '$percentage %',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
+      );
 }

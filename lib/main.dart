@@ -15,7 +15,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
   // Intl.defaultLocale = 'pt_BR';
   // initializeDateFormatting();
-
   store = Store<AppState>(initialState: AppState.initialState());
   NavigateAction.setNavigatorKey(navigatorKey);
   runApp(MyApp());

@@ -85,7 +85,8 @@ class SetBillCurrentBillAction extends ReduxAction<AppState> {
 
   @override
   Future<AppState> reduce() async {
-    BillModel billModelSelected = BillModel('');
+    BillModel billModelSelected =
+        BillModel('', name: '', value: 0, dueDate: DateTime.now());
     if (id.isNotEmpty) {
       billModelSelected =
           state.billState.billList!.firstWhere((element) => element.id == id);

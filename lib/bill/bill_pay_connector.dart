@@ -32,7 +32,8 @@ class BillPayFactory extends VmFactory<AppState, BillPayConnector> {
         onPay: (String id, bool isPaid) => dispatch(
           UpdateDocBillAction(
             id: id,
-            billModel: BillModel('', isPaid: isPaid),
+            // billModel: BillModel('', isPaid: isPaid,),
+            billModel: state.billState.billCurrent!.copyWith(isPaid: isPaid),
           ),
         ),
         billModel: state.billState.billCurrent!,
