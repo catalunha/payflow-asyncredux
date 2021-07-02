@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/bill/bill_action.dart';
 import 'package:payflow_asyncredux/home/home_page.dart';
-import 'package:payflow_asyncredux/login/login_actions.dart';
+import 'package:payflow_asyncredux/login/login_action.dart';
 
 class HomePageConnector extends StatelessWidget {
   const HomePageConnector({Key? key}) : super(key: key);

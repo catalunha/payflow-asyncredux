@@ -1,9 +1,11 @@
-import 'package:async_redux/async_redux.dart';
+import 'package:path/path.dart';
 import 'package:flutter/material.dart';
+import 'package:async_redux/async_redux.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/bill/bill_action.dart';
 import 'package:payflow_asyncredux/bill/bill_create_text_page.dart';
 import 'package:payflow_asyncredux/bill/bill_model.dart';
+import 'package:payflow_asyncredux/upload/upload_action.dart';
 
 class BillCreateTextPageConnector extends StatelessWidget {
   const BillCreateTextPageConnector({Key? key}) : super(key: key);
@@ -16,6 +18,11 @@ class BillCreateTextPageConnector extends StatelessWidget {
         formController: vm.formController,
         onSave: vm.onSave,
         billModel: vm.billModel,
+        selectedLocalFileName: vm.selectedLocalFileName,
+        selectLocalFile: vm.selectLocalFile,
+        uploadingFile: vm.uploadingFile,
+        percentageOfUpload: vm.percentageOfUpload,
+        urlForDownload: vm.urlForDownload,
       ),
     );
   }
@@ -49,19 +56,47 @@ class BillInsertTextFactory
         },
         billModel: state.billState.billCurrent ??
             BillModel('', name: '', value: 0, dueDate: DateTime.now()),
+        selectLocalFile: () {
+          dispatch(SelectFileUploadAction());
+        },
+        selectedLocalFileName: state.uploadState.selectedLocalFile != null
+            ? basename(state.uploadState.selectedLocalFile!.path)
+            : 'Arquivo ainda não selecionado',
+        uploadingFile: () async {
+          dispatch(UploadingFileUploadAction());
+          // dispatch(StreamUploadTask());
+        },
+        percentageOfUpload: state.uploadState.uploadPercentage ?? 0.0,
+        urlForDownload: state.uploadState.urlForDownload ?? '',
       );
 }
 
 class BillInsertTextViewModel extends Vm {
   final FormController formController;
-  final Function(BillModel) onSave;
   final BillModel billModel;
+  final String selectedLocalFileName;
+  final double percentageOfUpload;
+  final String urlForDownload;
+  final Function(BillModel) onSave;
+  final VoidCallback selectLocalFile;
+  final VoidCallback uploadingFile;
 
   BillInsertTextViewModel({
     required this.formController,
     required this.onSave,
     required this.billModel,
-  }) : super(equals: [formController, billModel]);
+    required this.selectLocalFile,
+    required this.selectedLocalFileName,
+    required this.uploadingFile,
+    required this.percentageOfUpload,
+    required this.urlForDownload,
+  }) : super(equals: [
+          formController,
+          billModel,
+          selectedLocalFileName,
+          percentageOfUpload,
+          urlForDownload,
+        ]);
 }
 
 class FormController {

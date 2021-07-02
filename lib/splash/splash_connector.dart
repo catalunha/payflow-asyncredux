@@ -2,7 +2,7 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:payflow_asyncredux/app_state.dart';
 import 'package:payflow_asyncredux/home/home_page_connector.dart';
-import 'package:payflow_asyncredux/login/login_actions.dart';
+import 'package:payflow_asyncredux/login/login_action.dart';
 import 'package:payflow_asyncredux/login/login_connector.dart';
 import 'package:payflow_asyncredux/login/login_state.dart';
 import 'package:payflow_asyncredux/splash/splash_page.dart';

@@ -20,13 +20,23 @@ class BillCreateTextPage extends StatefulWidget {
   final FormController formController;
   final Function(BillModel) onSave;
   final BillModel billModel;
+  final String selectedLocalFileName;
+  final VoidCallback selectLocalFile;
+  final VoidCallback uploadingFile;
+  final double percentageOfUpload;
+  final String urlForDownload;
 
-  const BillCreateTextPage(
-      {Key? key,
-      required this.formController,
-      required this.onSave,
-      required this.billModel})
-      : super(key: key);
+  const BillCreateTextPage({
+    Key? key,
+    required this.formController,
+    required this.onSave,
+    required this.billModel,
+    required this.selectedLocalFileName,
+    required this.selectLocalFile,
+    required this.uploadingFile,
+    required this.percentageOfUpload,
+    required this.urlForDownload,
+  }) : super(key: key);
 
   @override
   _BillCreateTextPageState createState() => _BillCreateTextPageState();
@@ -67,7 +77,7 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
   @override
   Widget build(BuildContext context) {
     final fileName =
-        file != null ? basename(file!.path) : 'Arquivo ainda não selectionado';
+        file != null ? basename(file!.path) : 'Arquivo ainda não selecionado';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -162,12 +172,25 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
                 onTap: selectFile,
               ),
               ListTile(
+                leading: Icon(Icons.attach_file),
+                title: Text('Select file (state)'),
+                subtitle: Text(widget.selectedLocalFileName),
+                onTap: widget.selectLocalFile,
+              ),
+              ListTile(
                 leading: Icon(Icons.cloud_upload_outlined),
                 title: Text('Upload File'),
                 // subtitle: Text(urlDownload ?? ''),
                 onTap: uploadFile,
               ),
               task != null ? buildUploadStatus(task!) : Container(),
+              ListTile(
+                leading: Icon(Icons.cloud_upload_outlined),
+                title: Text('Upload File 2'),
+                subtitle: Text(widget.urlForDownload),
+                onTap: widget.uploadingFile,
+              ),
+              Text('${widget.percentageOfUpload.toStringAsFixed(2)}'),
             ],
           ),
         ),
@@ -233,6 +256,7 @@ class _BillCreateTextPageState extends State<BillCreateTextPage> {
     task = FirebaseApi.uploadFile(destination, file!);
     setState(() {});
     if (task == null) return;
+
     final snapshot = await task!.whenComplete(() {});
     urlDownload = await snapshot.ref.getDownloadURL();
     setState(() {});
